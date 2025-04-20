@@ -104,6 +104,7 @@ const FileManager = () => {
             onChange={(e) => setFile(e.target.files[0])}
             style={styles.hiddenFileInput}
           />
+          {file && <div style={styles.selectedFile}>{file.name}</div>}
           <button onClick={uploadFile} style={styles.buttonPrimary}>
             Upload
           </button>
@@ -229,6 +230,15 @@ const styles = {
   },
   hiddenFileInput: {
     display: "none",
+  },
+  selectedFile: {
+    marginTop: "6px",
+    fontSize: "14px",
+    color: "#cdefff",
+    wordBreak: "break-word",
+    textAlign: "left",
+    padding: "0 4px",
+    fontStyle: "italic",
   },
   fileLabel: {
     padding: "12px",
