@@ -146,14 +146,14 @@ const styles = {
     overflow: "hidden",
     zIndex: 1000,
   },
-  matrixStream: {
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    padding: "20px 0",
-  },
-  
+matrixStream: {
+  flexGrow: 1,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
+  padding: "20px 0",
+},
+
   matrixStream: {
     flexGrow: 1,
     width: "100vw",
