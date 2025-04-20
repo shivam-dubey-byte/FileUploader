@@ -19,11 +19,10 @@ const UnlockScreen = () => {
   useEffect(() => {
     if (!isUnlocked) {
       const interval = setInterval(() => {
-        setMatrixLines((lines) => [
-          ...lines.slice(-50),
-          Array.from({ length: 60 }, () => (Math.random() > 0.7 ? Math.floor(Math.random() * 2) : " ")).join(" "),
-        ]);
-      }, 150);
+        const horizontal = Array.from({ length: 70 }, () => (Math.random() > 0.8 ? Math.floor(Math.random() * 2) : " ")).join(" ");
+        const vertical = `| ${Array.from({ length: 10 }, () => (Math.random() > 0.7 ? Math.floor(Math.random() * 2) : " ")).join("\n| ")}`;
+        setMatrixLines((lines) => [...lines.slice(-40), horizontal, vertical]);
+      }, 300);
       return () => clearInterval(interval);
     }
   }, [isUnlocked]);
@@ -34,9 +33,9 @@ const UnlockScreen = () => {
     <div style={styles.terminalWrapper}>
       <div style={styles.matrixBackground}>
         {matrixLines.map((line, idx) => (
-          <div key={idx} style={styles.matrixLine}>{line}</div>
+          <pre key={idx} style={styles.matrixLine}>{line}</pre>
         ))}
-        <div style={styles.authBadge}>Authorized by SRD !!</div>
+        <div style={styles.authBadge}># Authorized by SRD #</div>
       </div>
       <div style={styles.terminalBox}>
         <p style={styles.terminalPrompt}>Developer Mode Access</p>
@@ -57,8 +56,8 @@ const UnlockScreen = () => {
 
 const styles = {
   terminalWrapper: {
-    backgroundColor: "#0d0d0d",
-    color: "#33ff33",
+    backgroundColor: "#000814",
+    color: "#33ccff",
     position: "fixed",
     top: 0,
     left: 0,
@@ -70,14 +69,16 @@ const styles = {
     flexDirection: "column",
     fontFamily: "monospace",
     overflow: "hidden",
-    zIndex: 1000
+    zIndex: 1000,
+    padding: "16px",
+    boxSizing: "border-box"
   },
   matrixBackground: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "100vw",
-    height: "100vh",
+    width: "100%",
+    height: "100%",
     zIndex: 0,
     overflow: "hidden",
     padding: "20px",
@@ -85,59 +86,63 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    animation: "fadeIn 1s ease-in-out",
-    background: "linear-gradient(to bottom, #000428, #004e92)",
+    background: "radial-gradient(circle, #001d3d, #000814)",
   },
   matrixLine: {
-    color: "#00ccff",
-    fontSize: "14px",
-    lineHeight: "18px",
-    whiteSpace: "pre",
-    fontWeight: "bold",
-    opacity: 0.8,
-    animation: "scrollFade 10s linear infinite",
+    color: "#00bfff",
+    fontSize: "3vw",
+    lineHeight: "1.2em",
+    fontWeight: "500",
+    opacity: 0.85,
+    textShadow: "0 0 6px #00bfff",
+    whiteSpace: "pre-wrap",
+    wordBreak: "break-word"
   },
   authBadge: {
     position: "absolute",
-    bottom: "20px",
+    bottom: "25px",
     left: "50%",
     transform: "translateX(-50%)",
-    fontSize: "18px",
-    color: "#00bcd4",
+    fontSize: "4vw",
+    maxFontSize: "18px",
+    color: "#1de9b6",
     fontWeight: "bold",
-    animation: "fadeGlow 2s ease-in-out infinite alternate",
+    animation: "fadeGlow 3s ease-in-out infinite alternate",
   },
   terminalBox: {
-    border: "1px solid #33ff33",
+    border: "1px solid #1de9b6",
     padding: "30px",
     borderRadius: "12px",
-    backgroundColor: "#000",
-    width: "90%",
+    backgroundColor: "#001d3d",
+    width: "100%",
     maxWidth: "400px",
     textAlign: "center",
     zIndex: 10,
-    boxShadow: "0 0 20px rgba(0,255,0,0.4)"
+    boxShadow: "0 0 20px rgba(0,255,255,0.3)",
+    boxSizing: "border-box"
   },
   terminalPrompt: {
-    fontSize: "22px",
+    fontSize: "20px",
     fontWeight: "bold",
     marginBottom: "10px"
   },
   terminalText: {
-    marginBottom: "8px"
+    marginBottom: "8px",
+    fontSize: "16px"
   },
   terminalInput: {
     padding: "10px",
     width: "100%",
-    backgroundColor: "#111",
-    color: "#33ff33",
-    border: "1px solid #33ff33",
+    backgroundColor: "#0a192f",
+    color: "#33ccff",
+    border: "1px solid #33ccff",
     borderRadius: "6px",
-    fontFamily: "monospace"
+    fontFamily: "monospace",
+    fontSize: "16px"
   },
   buttonAnimated: {
     marginTop: "12px",
-    backgroundColor: "#33ff33",
+    backgroundColor: "#1de9b6",
     color: "#000",
     padding: "10px 20px",
     border: "none",
@@ -145,7 +150,8 @@ const styles = {
     fontWeight: "bold",
     cursor: "pointer",
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
-    boxShadow: "0 0 10px rgba(51, 255, 51, 0.5)",
+    boxShadow: "0 0 10px rgba(29, 233, 182, 0.6)",
+    fontSize: "16px"
   },
 };
 
