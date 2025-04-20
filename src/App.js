@@ -1,10 +1,10 @@
 import React from 'react';
-import FileManager from './components/FileManager';
+import UnlockScreen from './components/UnlockScreen';
 
 function App() {
   return (
     <div>
-      <FileManager />
+      <UnlockScreen/>;
     </div>
   );
 }

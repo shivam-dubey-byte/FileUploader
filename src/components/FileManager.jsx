@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 const FileManager = () => {
   const BASE_URL = "https://c188-115-245-115-222.ngrok-free.app";
-  const DEV_PASSWORD = "unlock2024";
 
   const [file, setFile] = useState(null);
   const [filename, setFilename] = useState("");
@@ -10,53 +9,50 @@ const FileManager = () => {
   const [files, setFiles] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [attempt, setAttempt] = useState("");
-
   const filesPerPage = 10;
-
-  const authenticate = () => {
-    if (attempt === DEV_PASSWORD) setIsAuthenticated(true);
-    else alert("❌ Invalid command. Try again.");
-  };
 
   const uploadFile = async () => {
     if (!file) {
       setMessage("Please select a file to upload.");
       return;
     }
+
     const formData = new FormData();
     formData.append("file", file);
+
     try {
       const res = await fetch(`${BASE_URL}/upload`, {
         method: "POST",
         body: formData,
       });
+
       const result = await res.json();
       if (res.ok) {
-        setMessage(`✅ Uploaded: ${result.path}`);
+        setMessage(`\u2705 Uploaded: ${result.path}`);
         setFile(null);
       } else {
-        setMessage(`❌ Error: ${result.error}`);
+        setMessage(`\u274C Error: ${result.error}`);
       }
     } catch (err) {
-      setMessage("❌ Upload failed");
+      setMessage("\u274C Upload failed");
     }
   };
 
   const fetchFiles = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/list-files`, { method: "POST" });
+      const res = await fetch(`${BASE_URL}/list-files`, {
+        method: "POST",
+      });
       const data = await res.json();
       if (res.ok) {
         setFiles(data.files);
-        setMessage("📂 File list fetched.");
+        setMessage("\ud83d\udcc2 File list fetched.");
         setCurrentPage(1);
       } else {
-        setMessage("❌ Could not fetch file list.");
+        setMessage("\u274C Could not fetch file list.");
       }
     } catch (err) {
-      setMessage("❌ Server error.");
+      setMessage("\u274C Server error.");
     }
   };
 
@@ -64,13 +60,17 @@ const FileManager = () => {
     try {
       const res = await fetch(`${BASE_URL}/file`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ filename: targetFile }),
       });
+
       if (!res.ok) {
-        alert("❌ File not found or download failed.");
+        alert("\u274C File not found or download failed.");
         return;
       }
+
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -80,7 +80,7 @@ const FileManager = () => {
       a.click();
       document.body.removeChild(a);
     } catch (err) {
-      alert("❌ Download error.");
+      alert("\u274C Download error.");
     }
   };
 
@@ -89,42 +89,37 @@ const FileManager = () => {
   const startIdx = (currentPage - 1) * filesPerPage;
   const paginatedFiles = filteredFiles.slice(startIdx, startIdx + filesPerPage);
 
-  if (!isAuthenticated) {
-    return (
-      <div style={styles.terminalWrapper}>
-        <div style={styles.terminalBox}>
-          <p style={styles.terminalPrompt}>Developer Mode Access</p>
-          <p style={styles.terminalText}>$ Enter access code:</p>
-          <input
-            type="password"
-            style={styles.terminalInput}
-            value={attempt}
-            onChange={(e) => setAttempt(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && authenticate()}
-            autoFocus
-          />
-          <button style={styles.buttonPrimary} onClick={authenticate}>Enter</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div style={styles.wrapper}>
       <div style={styles.container}>
-        <h1 style={styles.header}>Luxury File Manager</h1>
+        <h1 style={styles.header}>SRD File Manager</h1>
+
         <div style={styles.section}>
           <label htmlFor="fileInput" style={styles.fileLabel}>Choose File</label>
           <input id="fileInput" type="file" onChange={(e) => setFile(e.target.files[0])} style={styles.hiddenFileInput} />
           <button onClick={uploadFile} style={styles.buttonPrimary}>Upload</button>
         </div>
+
         <div style={styles.section}>
-          <input type="text" placeholder="Enter filename to download" value={filename} onChange={(e) => setFilename(e.target.value)} style={styles.input} />
+          <input
+            type="text"
+            placeholder="Enter filename to download"
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
+            style={styles.input}
+          />
           <button onClick={() => downloadFile(filename)} style={styles.buttonOutline}>Download</button>
         </div>
+
         <div style={styles.section}>
           <button onClick={fetchFiles} style={styles.buttonGhost}>List All Files</button>
-          <input type="text" placeholder="Search files..." value={search} onChange={(e) => setSearch(e.target.value)} style={styles.input} />
+          <input
+            type="text"
+            placeholder="Search files..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={styles.input}
+          />
           <div style={styles.fileList}>
             {paginatedFiles.map((f) => (
               <div key={f} style={styles.fileCard}>
@@ -135,12 +130,13 @@ const FileManager = () => {
           </div>
           {totalPages > 1 && (
             <div style={styles.pagination}>
-              <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1} style={styles.pageButton}>&laquo;</button>
+              <button onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))} disabled={currentPage === 1} style={styles.pageButton}>&laquo;</button>
               <span style={{ color: "#eee" }}>Page {currentPage} of {totalPages}</span>
-              <button onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} style={styles.pageButton}>&raquo;</button>
+              <button onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages} style={styles.pageButton}>&raquo;</button>
             </div>
           )}
         </div>
+
         <div style={styles.message}>{message}</div>
       </div>
     </div>
@@ -149,34 +145,133 @@ const FileManager = () => {
 
 const styles = {
   wrapper: {
-    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   },
   container: {
-    width: "100%", maxWidth: "550px", backgroundColor: "#ffffff10", backdropFilter: "blur(10px)", borderRadius: "20px", padding: "40px", color: "white", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+    width: "100%",
+    maxWidth: "550px",
+    backgroundColor: "#ffffff10",
+    backdropFilter: "blur(10px)",
+    borderRadius: "20px",
+    padding: "40px",
+    color: "white",
+    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
   },
-  terminalWrapper: {
-    backgroundColor: "#0d0d0d", color: "#33ff33", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", fontFamily: "monospace",
+  header: {
+    fontSize: "30px",
+    fontWeight: "bold",
+    marginBottom: "20px",
+    textAlign: "center",
+    color: "#f5f5f5",
   },
-  terminalBox: {
-    border: "1px solid #33ff33", padding: "30px", borderRadius: "12px", backgroundColor: "#000", width: "90%", maxWidth: "400px", textAlign: "center"
+  section: {
+    marginBottom: "25px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
   },
-  terminalPrompt: { fontSize: "22px", fontWeight: "bold", marginBottom: "10px" },
-  terminalText: { marginBottom: "8px" },
-  terminalInput: { padding: "10px", width: "100%", backgroundColor: "#111", color: "#33ff33", border: "1px solid #33ff33", borderRadius: "6px", fontFamily: "monospace" },
-  section: { marginBottom: "25px", display: "flex", flexDirection: "column", gap: "12px" },
-  input: { padding: "10px", borderRadius: "8px", border: "1px solid #ccc", fontSize: "14px", outline: "none" },
-  hiddenFileInput: { display: "none" },
-  fileLabel: { padding: "10px", border: "1px dashed #aaa", borderRadius: "10px", backgroundColor: "#ffffff22", color: "#f9f9f9", textAlign: "center", cursor: "pointer", transition: "background 0.3s" },
-  buttonPrimary: { backgroundColor: "#4CAF50", color: "white", padding: "10px", borderRadius: "8px", border: "none", cursor: "pointer", fontWeight: "bold" },
-  buttonOutline: { backgroundColor: "transparent", color: "white", padding: "10px", border: "1px solid white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" },
-  buttonGhost: { backgroundColor: "#ffffff10", color: "white", padding: "10px", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" },
-  fileList: { display: "flex", flexDirection: "column", gap: "10px", maxHeight: "200px", overflowY: "auto", padding: "5px 0" },
-  fileCard: { backgroundColor: "#ffffff15", borderRadius: "10px", padding: "10px 15px", display: "flex", justifyContent: "space-between", alignItems: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" },
-  fileName: { color: "#e0f7fa", fontWeight: "500" },
-  downloadBtn: { backgroundColor: "#2196F3", color: "white", padding: "6px 12px", borderRadius: "6px", border: "none", cursor: "pointer" },
-  pageButton: { backgroundColor: "#ffffff15", border: "none", color: "white", padding: "6px 12px", margin: "0 10px", borderRadius: "6px", cursor: "pointer" },
-  pagination: { display: "flex", alignItems: "center", justifyContent: "center", marginTop: "15px", gap: "10px" },
-  message: { marginTop: "20px", textAlign: "center", fontWeight: "bold" },
+  input: {
+    padding: "10px",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    fontSize: "14px",
+    outline: "none",
+  },
+  hiddenFileInput: {
+    display: "none",
+  },
+  fileLabel: {
+    padding: "10px",
+    border: "1px dashed #aaa",
+    borderRadius: "10px",
+    backgroundColor: "#ffffff22",
+    color: "#f9f9f9",
+    textAlign: "center",
+    cursor: "pointer",
+    transition: "background 0.3s",
+  },
+  buttonPrimary: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+    padding: "10px",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: "bold",
+  },
+  buttonOutline: {
+    backgroundColor: "transparent",
+    color: "white",
+    padding: "10px",
+    border: "1px solid white",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  },
+  buttonGhost: {
+    backgroundColor: "#ffffff10",
+    color: "white",
+    padding: "10px",
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  },
+  fileList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    maxHeight: "200px",
+    overflowY: "auto",
+    padding: "5px 0",
+  },
+  fileCard: {
+    backgroundColor: "#ffffff15",
+    borderRadius: "10px",
+    padding: "10px 15px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+  },
+  fileName: {
+    color: "#e0f7fa",
+    fontWeight: "500",
+  },
+  downloadBtn: {
+    backgroundColor: "#2196F3",
+    color: "white",
+    padding: "6px 12px",
+    borderRadius: "6px",
+    border: "none",
+    cursor: "pointer",
+  },
+  pageButton: {
+    backgroundColor: "#ffffff15",
+    border: "none",
+    color: "white",
+    padding: "6px 12px",
+    margin: "0 10px",
+    borderRadius: "6px",
+    cursor: "pointer",
+  },
+  pagination: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "15px",
+    gap: "10px",
+  },
+  message: {
+    marginTop: "20px",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
 };
 
 export default FileManager;
