@@ -36,7 +36,6 @@ const UnlockScreen = () => {
           "Verifying identity...",
           "Access log verified.",
           "System ready.",
-          `#####  #####  #####\n#   #  #   #  #   #\n#####  #   #  #####\n#      #   #      #\n#      #####      #`
         ];
         const special = Math.random() > 0.995 ? phrases[Math.floor(Math.random() * phrases.length)] : null;
         const offset = Math.floor(Math.random() * 40);
@@ -73,6 +72,7 @@ const UnlockScreen = () => {
         `}
       </style>
 
+      {/* Matrix Background */}
       <div style={styles.matrixBackground}>
         <div style={styles.matrixStream}>
           {matrixLines.map((line, idx) => (
@@ -82,54 +82,53 @@ const UnlockScreen = () => {
         <div style={styles.authBadge}># Authorized by SRD #</div>
       </div>
 
-      <div style={styles.terminalBox}>
-        <p style={styles.terminalPrompt}>Developer Mode Access</p>
-        <p style={styles.terminalText}>$ Enter access code:</p>
-        <input
-          type="password"
-          style={styles.terminalInput}
-          value={attempt}
-          onChange={(e) => setAttempt(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && authenticate()}
-          autoFocus
-        />
-        <button style={styles.buttonAnimated} onClick={authenticate}>Enter</button>
+      {/* Central Content */}
+      <div style={styles.centerContent}>
+        <div style={styles.terminalBox}>
+          <p style={styles.terminalPrompt}>Developer Mode Access</p>
+          <p style={styles.terminalText}>$ Enter access code:</p>
+          <input
+            type="password"
+            style={styles.terminalInput}
+            value={attempt}
+            onChange={(e) => setAttempt(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && authenticate()}
+            autoFocus
+          />
+          <button style={styles.buttonAnimated} onClick={authenticate}>Enter</button>
+        </div>
+
+        {/* Access Status Box */}
+        {accessStatus && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 'min(95vw, 440px)',
+            minWidth: '320px',
+            minHeight: '280px',
+            padding: '40px 24px',
+            borderRadius: '12px',
+            fontSize: 'clamp(1.6rem, 4vw, 2rem)',
+            fontWeight: 'bold',
+            color: '#00bfff',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backdropFilter: 'blur(14px)',
+            background: 'rgba(0, 8, 20, 0.5)',
+            zIndex: 999,
+            animation: 'fadeInZoom 0.4s ease-out',
+            border: `2px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
+            boxShadow: `0 0 30px ${accessStatus === 'granted' ? '#00ff99aa' : '#ff4c4caa'}, inset 0 0 10px ${accessStatus === 'granted' ? '#00ff9988' : '#ff4c4c88'}`,
+            boxSizing: 'border-box'
+          }}>
+            {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
+          </div>
+        )}
       </div>
-
-      {accessStatus && (
-  <div style={{
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 'min(95vw, 440px)',
-    minWidth: '320px',
-    minHeight: '280px',
-    height: 'auto',
-    padding: '40px 24px',
-    borderRadius: '12px',
-    fontSize: 'clamp(1.6rem, 4vw, 2rem)',
-    fontWeight: 'bold',
-    color: '#00bfff',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    backdropFilter: 'blur(14px)',
-    background: 'rgba(0, 8, 20, 0.5)',
-    zIndex: 999,
-    animation: 'fadeInZoom 0.4s ease-out',
-    border: `2px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
-    boxShadow: `0 0 30px ${accessStatus === 'granted' ? '#00ff99aa' : '#ff4c4caa'}, inset 0 0 10px ${accessStatus === 'granted' ? '#00ff9988' : '#ff4c4c88'}`,
-    boxSizing: 'border-box',
-  }}>
-    {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
-  </div>
-)}
-
-
-
     </div>
   );
 };
@@ -143,15 +142,9 @@ const styles = {
     left: 0,
     width: "100vw",
     height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
     fontFamily: "monospace",
     overflow: "hidden",
     zIndex: 1000,
-    padding: "16px",
-    boxSizing: "border-box"
   },
   matrixBackground: {
     position: "absolute",
@@ -165,8 +158,6 @@ const styles = {
     flexDirection: "column",
     justifyContent: "flex-end",
     background: "linear-gradient(to bottom, #000000, #001f3f)",
-    padding: "0",
-    margin: "0"
   },
   matrixStream: {
     flexGrow: 1,
@@ -187,7 +178,6 @@ const styles = {
     wordBreak: "break-word",
     width: "100%",
     lineHeight: "2.2",
-    overflow: "hidden",
   },
   authBadge: {
     position: "fixed",
@@ -202,6 +192,16 @@ const styles = {
     zIndex: 2,
     whiteSpace: "nowrap",
   },
+  centerContent: {
+    position: "relative",
+    zIndex: 10,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    width: "100vw",
+  },
   terminalBox: {
     border: "1px solid #00ffcc",
     padding: "30px",
@@ -210,18 +210,17 @@ const styles = {
     width: "100%",
     maxWidth: "400px",
     textAlign: "center",
-    zIndex: 10,
     boxShadow: "0 0 20px rgba(0,255,255,0.3)",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
   },
   terminalPrompt: {
     fontSize: "20px",
     fontWeight: "bold",
-    marginBottom: "10px"
+    marginBottom: "10px",
   },
   terminalText: {
     marginBottom: "8px",
-    fontSize: "16px"
+    fontSize: "16px",
   },
   terminalInput: {
     padding: "10px",
@@ -231,7 +230,7 @@ const styles = {
     border: "1px solid #33ccff",
     borderRadius: "6px",
     fontFamily: "monospace",
-    fontSize: "16px"
+    fontSize: "16px",
   },
   buttonAnimated: {
     marginTop: "12px",
@@ -244,7 +243,7 @@ const styles = {
     cursor: "pointer",
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
     boxShadow: "0 0 10px rgba(0, 230, 230, 0.6)",
-    fontSize: "16px"
+    fontSize: "16px",
   },
 };
 
