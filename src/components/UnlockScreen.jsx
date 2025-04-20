@@ -102,18 +102,20 @@ const UnlockScreen = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'min(100vw, 440px)',
+    width: 'min(95vw, 440px)',
     minWidth: '320px',
-    height: '260px',
-    padding: '30px',
+    minHeight: '280px',
+    height: 'auto',
+    padding: '40px 24px',
     borderRadius: '12px',
-    fontSize: '2rem',
+    fontSize: 'clamp(1.6rem, 4vw, 2rem)',
     fontWeight: 'bold',
     color: '#00bfff',
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
     backdropFilter: 'blur(14px)',
     background: 'rgba(0, 8, 20, 0.5)',
     zIndex: 999,
@@ -125,6 +127,7 @@ const UnlockScreen = () => {
     {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
   </div>
 )}
+
 
 
     </div>
