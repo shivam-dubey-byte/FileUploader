@@ -28,13 +28,13 @@ const FileManager = () => {
 
       const result = await res.json();
       if (res.ok) {
-        setMessage(`\u2705 Uploaded: ${result.path}`);
+        setMessage(`✅ Uploaded: ${result.path}`);
         setFile(null);
       } else {
-        setMessage(`\u274C Error: ${result.error}`);
+        setMessage(`❌ Error: ${result.error}`);
       }
     } catch (err) {
-      setMessage("\u274C Upload failed");
+      setMessage("❌ Upload failed");
     }
   };
 
@@ -46,13 +46,13 @@ const FileManager = () => {
       const data = await res.json();
       if (res.ok) {
         setFiles(data.files);
-        setMessage("\ud83d\udcc2 File list fetched.");
+        setMessage("📁 File list fetched.");
         setCurrentPage(1);
       } else {
-        setMessage("\u274C Could not fetch file list.");
+        setMessage("❌ Could not fetch file list.");
       }
     } catch (err) {
-      setMessage("\u274C Server error.");
+      setMessage("❌ Server error.");
     }
   };
 
@@ -60,14 +60,12 @@ const FileManager = () => {
     try {
       const res = await fetch(`${BASE_URL}/file`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: targetFile }),
       });
 
       if (!res.ok) {
-        alert("\u274C File not found or download failed.");
+        alert("❌ File not found or download failed.");
         return;
       }
 
@@ -80,11 +78,13 @@ const FileManager = () => {
       a.click();
       document.body.removeChild(a);
     } catch (err) {
-      alert("\u274C Download error.");
+      alert("❌ Download error.");
     }
   };
 
-  const filteredFiles = files.filter((f) => f.toLowerCase().includes(search.toLowerCase()));
+  const filteredFiles = files.filter((f) =>
+    f.toLowerCase().includes(search.toLowerCase())
+  );
   const totalPages = Math.ceil(filteredFiles.length / filesPerPage);
   const startIdx = (currentPage - 1) * filesPerPage;
   const paginatedFiles = filteredFiles.slice(startIdx, startIdx + filesPerPage);
@@ -92,12 +92,21 @@ const FileManager = () => {
   return (
     <div style={styles.wrapper}>
       <div style={styles.container}>
-        <h1 style={styles.header}>SRD File Manager</h1>
+        <h1 style={styles.header}>📁 SRD File Manager</h1>
 
         <div style={styles.section}>
-          <label htmlFor="fileInput" style={styles.fileLabel}>Choose File</label>
-          <input id="fileInput" type="file" onChange={(e) => setFile(e.target.files[0])} style={styles.hiddenFileInput} />
-          <button onClick={uploadFile} style={styles.buttonPrimary}>Upload</button>
+          <label htmlFor="fileInput" style={styles.fileLabel}>
+            Choose File
+          </label>
+          <input
+            id="fileInput"
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            style={styles.hiddenFileInput}
+          />
+          <button onClick={uploadFile} style={styles.buttonPrimary}>
+            Upload
+          </button>
         </div>
 
         <div style={styles.section}>
@@ -108,11 +117,18 @@ const FileManager = () => {
             onChange={(e) => setFilename(e.target.value)}
             style={styles.input}
           />
-          <button onClick={() => downloadFile(filename)} style={styles.buttonOutline}>Download</button>
+          <button
+            onClick={() => downloadFile(filename)}
+            style={styles.buttonOutline}
+          >
+            Download
+          </button>
         </div>
 
         <div style={styles.section}>
-          <button onClick={fetchFiles} style={styles.buttonGhost}>List All Files</button>
+          <button onClick={fetchFiles} style={styles.buttonGhost}>
+            List All Files
+          </button>
           <input
             type="text"
             placeholder="Search files..."
@@ -124,15 +140,38 @@ const FileManager = () => {
             {paginatedFiles.map((f) => (
               <div key={f} style={styles.fileCard}>
                 <div style={styles.fileName}>{f}</div>
-                <button onClick={() => downloadFile(f)} style={styles.downloadBtn}>Download</button>
+                <button
+                  onClick={() => downloadFile(f)}
+                  style={styles.downloadBtn}
+                >
+                  Download
+                </button>
               </div>
             ))}
           </div>
           {totalPages > 1 && (
             <div style={styles.pagination}>
-              <button onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))} disabled={currentPage === 1} style={styles.pageButton}>&laquo;</button>
-              <span style={{ color: "#eee" }}>Page {currentPage} of {totalPages}</span>
-              <button onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages} style={styles.pageButton}>&raquo;</button>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.max(1, prev - 1))
+                }
+                disabled={currentPage === 1}
+                style={styles.pageButton}
+              >
+                &laquo;
+              </button>
+              <span style={{ color: "#eee" }}>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                }
+                disabled={currentPage === totalPages}
+                style={styles.pageButton}
+              >
+                &raquo;
+              </button>
             </div>
           )}
         </div>
@@ -146,47 +185,53 @@ const FileManager = () => {
 const styles = {
   wrapper: {
     background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
-    height: "100vh",
+    minHeight: "100vh",
+    padding: "20px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    boxSizing: "border-box",
   },
   container: {
     width: "100%",
-    maxWidth: "550px",
+    maxWidth: "500px",
     backgroundColor: "#ffffff10",
     backdropFilter: "blur(10px)",
-    borderRadius: "20px",
-    padding: "40px",
+    borderRadius: "16px",
+    padding: "24px",
     color: "white",
-    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-  },
-  header: {
-    fontSize: "30px",
-    fontWeight: "bold",
-    marginBottom: "20px",
-    textAlign: "center",
-    color: "#f5f5f5",
-  },
-  section: {
-    marginBottom: "25px",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+    boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: "20px",
+  },
+  header: {
+    fontSize: "28px",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: "10px",
+  },
+  section: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
   },
   input: {
-    padding: "10px",
+    padding: "12px",
     borderRadius: "8px",
     border: "1px solid #ccc",
-    fontSize: "14px",
+    fontSize: "16px",
     outline: "none",
+    width: "100%",
+    boxSizing: "border-box",
   },
   hiddenFileInput: {
     display: "none",
   },
   fileLabel: {
-    padding: "10px",
+    padding: "12px",
     border: "1px dashed #aaa",
     borderRadius: "10px",
     backgroundColor: "#ffffff22",
@@ -198,35 +243,42 @@ const styles = {
   buttonPrimary: {
     backgroundColor: "#4CAF50",
     color: "white",
-    padding: "10px",
+    padding: "12px",
     borderRadius: "8px",
     border: "none",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "16px",
+    width: "100%",
+    boxSizing: "border-box",
   },
   buttonOutline: {
     backgroundColor: "transparent",
     color: "white",
-    padding: "10px",
+    padding: "12px",
     border: "1px solid white",
     borderRadius: "8px",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "16px",
+    width: "100%",
   },
   buttonGhost: {
     backgroundColor: "#ffffff10",
     color: "white",
-    padding: "10px",
+    padding: "12px",
     border: "1px solid rgba(255,255,255,0.2)",
     borderRadius: "8px",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "16px",
+    width: "100%",
   },
   fileList: {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-    maxHeight: "200px",
+    maxHeight: "240px",
     overflowY: "auto",
     padding: "5px 0",
   },
@@ -242,6 +294,9 @@ const styles = {
   fileName: {
     color: "#e0f7fa",
     fontWeight: "500",
+    wordBreak: "break-word",
+    fontSize: "14px",
+    maxWidth: "70%",
   },
   downloadBtn: {
     backgroundColor: "#2196F3",
@@ -264,11 +319,11 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "15px",
+    marginTop: "10px",
     gap: "10px",
   },
   message: {
-    marginTop: "20px",
+    marginTop: "10px",
     textAlign: "center",
     fontWeight: "bold",
   },
