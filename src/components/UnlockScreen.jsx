@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import FileManager from "./FileManager";
 
 const UnlockScreen = () => {
@@ -6,16 +6,30 @@ const UnlockScreen = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [attempt, setAttempt] = useState("");
   const [matrixLines, setMatrixLines] = useState(Array(30).fill(" "));
+  
+  const grantedRef = useRef(null);
+  const deniedRef = useRef(null);
 
   const PASSWORD = "unlock2024";
 
+  useEffect(() => {
+    grantedRef.current = new Audio("/sounds/access-granted.mp3");
+    deniedRef.current = new Audio("/sounds/access-denied.mp3");
+    grantedRef.current.load();
+    deniedRef.current.load();
+  }, []);
+
   const authenticate = () => {
     if (attempt === PASSWORD) {
+        grantedRef.current.currentTime = 0;
+        grantedRef.current.play();
       setAccessStatus("granted");
       setTimeout(() => {
         setIsUnlocked(true);
       }, 1500);
     } else {
+        deniedRef.current.currentTime = 0;
+        deniedRef.current.play();
       setAccessStatus("denied");
       setTimeout(() => setAccessStatus(null), 1500);
     }
