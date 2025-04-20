@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FileManager from "./FileManager";
 
 const UnlockScreen = () => {
+  const [accessStatus, setAccessStatus] = useState(null);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [attempt, setAttempt] = useState("");
   const [matrixLines, setMatrixLines] = useState(Array(30).fill(" "));
@@ -10,9 +11,13 @@ const UnlockScreen = () => {
 
   const authenticate = () => {
     if (attempt === PASSWORD) {
-      setIsUnlocked(true);
+      setAccessStatus("granted");
+      setTimeout(() => {
+        setIsUnlocked(true);
+      }, 1500);
     } else {
-      alert("❌ Invalid command. Try again.");
+      setAccessStatus("denied");
+      setTimeout(() => setAccessStatus(null), 1500);
     }
   };
 
@@ -61,6 +66,7 @@ const UnlockScreen = () => {
         </div>
         <div style={styles.authBadge}># Authorized by SRD #</div>
       </div>
+
       <div style={styles.terminalBox}>
         <p style={styles.terminalPrompt}>Developer Mode Access</p>
         <p style={styles.terminalText}>$ Enter access code:</p>
@@ -74,6 +80,35 @@ const UnlockScreen = () => {
         />
         <button style={styles.buttonAnimated} onClick={authenticate}>Enter</button>
       </div>
+
+      {accessStatus && (
+  <div style={{
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '420px',
+    maxWidth: '90vw',
+    minHeight: '200px',
+    backdropFilter: 'blur(12px)',
+    backgroundImage: 'linear-gradient(to bottom, rgba(0, 8, 20, 0.5), rgba(0, 31, 63, 0.5))',
+    borderRadius: '12px',
+    border: `3px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
+    color: accessStatus === 'granted' ? '#00ff99' : '#ff4c4c',
+    fontWeight: 'bold',
+    fontSize: '2.4rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '40px 20px',
+    boxShadow: `0 0 20px ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
+    zIndex: 999
+  }}>
+    {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
+  </div>
+)}
+
     </div>
   );
 };
@@ -110,7 +145,8 @@ const styles = {
     justifyContent: "flex-end",
     background: "linear-gradient(to bottom, #000000, #001f3f)",
     padding: "0",
-    margin: "0",},
+    margin: "0"
+  },
   matrixStream: {
     flexGrow: 1,
     width: "100vw",
@@ -118,7 +154,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    overflow: "hidden",},
+    overflow: "hidden",
+  },
   matrixLine: {
     color: "#00ffcc",
     fontSize: "clamp(10px, 1.5vw, 18px)",
