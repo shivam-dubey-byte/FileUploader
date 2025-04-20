@@ -58,6 +58,21 @@ const UnlockScreen = () => {
 
   return (
     <div style={styles.terminalWrapper}>
+      <style>
+        {`
+          @keyframes fadeInZoom {
+            0% {
+              transform: translate(-50%, -50%) scale(0.9);
+              opacity: 0;
+            }
+            100% {
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 1;
+            }
+          }
+        `}
+      </style>
+
       <div style={styles.matrixBackground}>
         <div style={styles.matrixStream}>
           {matrixLines.map((line, idx) => (
@@ -87,23 +102,25 @@ const UnlockScreen = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '420px',
-    maxWidth: '90vw',
-    minHeight: '200px',
-    backdropFilter: 'blur(12px)',
-    backgroundImage: 'linear-gradient(to bottom, rgba(0, 8, 20, 0.5), rgba(0, 31, 63, 0.5))',
+    width: 'min(90vw, 400px)',
+    minWidth: '280px',
+    minHeight: '180px',
+    padding: '40px 24px',
     borderRadius: '12px',
-    border: `3px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
-    color: accessStatus === 'granted' ? '#00ff99' : '#ff4c4c',
+    fontSize: '1.8rem',
     fontWeight: 'bold',
-    fontSize: '2.4rem',
+    color: '#00bfff',
+    textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center',
-    padding: '40px 20px',
-    boxShadow: `0 0 20px ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
-    zIndex: 999
+    backdropFilter: 'blur(12px)',
+    background: 'rgba(0, 8, 20, 0.5)',
+    zIndex: 999,
+    animation: 'fadeInZoom 0.4s ease-out',
+    border: `2px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
+    boxShadow: `0 0 30px ${accessStatus === 'granted' ? '#00ff99aa' : '#ff4c4caa'}, inset 0 0 10px ${accessStatus === 'granted' ? '#00ff9988' : '#ff4c4c88'}`,
+    boxSizing: 'border-box'
   }}>
     {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
   </div>
