@@ -102,29 +102,30 @@ const UnlockScreen = () => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'min(90vw, 400px)',
-    minWidth: '280px',
-    minHeight: '180px',
-    padding: '40px 24px',
+    width: 'min(100vw, 440px)',
+    minWidth: '320px',
+    height: '260px',
+    padding: '30px',
     borderRadius: '12px',
-    fontSize: '1.8rem',
+    fontSize: '2rem',
     fontWeight: 'bold',
     color: '#00bfff',
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backdropFilter: 'blur(12px)',
+    backdropFilter: 'blur(14px)',
     background: 'rgba(0, 8, 20, 0.5)',
     zIndex: 999,
     animation: 'fadeInZoom 0.4s ease-out',
     border: `2px solid ${accessStatus === 'granted' ? '#00ff99' : '#ff4c4c'}`,
     boxShadow: `0 0 30px ${accessStatus === 'granted' ? '#00ff99aa' : '#ff4c4caa'}, inset 0 0 10px ${accessStatus === 'granted' ? '#00ff9988' : '#ff4c4c88'}`,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   }}>
     {accessStatus === 'granted' ? 'ACCESS GRANTED' : 'ACCESS DENIED'}
   </div>
 )}
+
 
     </div>
   );
