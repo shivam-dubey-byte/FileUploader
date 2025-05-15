@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
-const BASE_URL = "https://6413-115-245-115-222.ngrok-free.app";
+const BASE_URL = "https://ff29-47-247-75-228.ngrok-free.app";
 
 const FileManager = () => {
   const [blocks, setBlocks] = useState([]);
@@ -285,8 +285,8 @@ const FileManager = () => {
             style={styles.searchInput}
             ref={searchRef}
           />
-          <button 
-            onClick={() => handleGlobalSearch(searchQuery)} 
+          <button
+            onClick={() => handleGlobalSearch(searchQuery)}
             style={styles.searchButton}
             disabled={globalLoading}
           >
@@ -301,8 +301,8 @@ const FileManager = () => {
               {searchResults.map((file, idx) => (
                 <div key={idx} style={styles.dropdownItem} onClick={() => setDropdownOpen(false)}>
                   <span style={styles.fileName}>{file}</span>
-                  <button 
-                    onClick={() => handleDownload(file)} 
+                  <button
+                    onClick={() => handleDownload(file)}
                     style={styles.downloadButton}
                     title="Download"
                   >
@@ -370,8 +370,8 @@ const FileManager = () => {
                 filesInFolder[block.id]?.map((file, idx) => (
                   <div key={idx} style={styles.fileItem}>
                     <span style={styles.fileName}>{file}</span>
-                    <button 
-                      onClick={() => handleDownload(file)} 
+                    <button
+                      onClick={() => handleDownload(file)}
                       style={styles.downloadButton}
                     >
                       Download
@@ -388,29 +388,29 @@ const FileManager = () => {
 };
 
 const styles = {
-  wrapper: { 
-    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)", 
-    minHeight: "100vh", 
-    padding: "20px", 
-    fontFamily: "'Poppins', sans-serif", 
-    color: "white" 
+  wrapper: {
+    background: "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+    minHeight: "100vh",
+    padding: "20px",
+    fontFamily: "'Poppins', sans-serif",
+    color: "white"
   },
-  title: { 
-    textAlign: "center", 
-    marginBottom: "30px", 
-    fontSize: "32px", 
-    fontWeight: "bold" 
+  title: {
+    textAlign: "center",
+    marginBottom: "30px",
+    fontSize: "32px",
+    fontWeight: "bold"
   },
-  addFolderWrapper: { 
-    display: "flex", 
-    justifyContent: "center", 
-    marginBottom: "20px", 
-    gap: "10px", 
-    flexWrap: "wrap" 
+  addFolderWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "20px",
+    gap: "10px",
+    flexWrap: "wrap"
   },
-  searchWrapper: { 
-    display: "flex", 
-    justifyContent: "center", 
+  searchWrapper: {
+    display: "flex",
+    justifyContent: "center",
     marginBottom: "30px",
     position: 'relative'
   },
@@ -420,29 +420,29 @@ const styles = {
     maxWidth: '600px',
     display: 'flex'
   },
-  input: { 
-    padding: "12px", 
-    width: "220px", 
-    borderRadius: "10px", 
-    border: "1px solid #ccc", 
-    backgroundColor: "#ffffff20", 
-    color: "white", 
-    outline: "none" 
+  input: {
+    padding: "12px",
+    width: "220px",
+    borderRadius: "10px",
+    border: "1px solid #ccc",
+    backgroundColor: "#ffffff20",
+    color: "white",
+    outline: "none"
   },
-  addFolderButton: { 
-    padding: "12px 24px", 
-    backgroundColor: "#4CAF50", 
-    border: "none", 
-    borderRadius: "10px", 
-    fontWeight: "bold", 
-    color: "white", 
+  addFolderButton: {
+    padding: "12px 24px",
+    backgroundColor: "#4CAF50",
+    border: "none",
+    borderRadius: "10px",
+    fontWeight: "bold",
+    color: "white",
     cursor: "pointer",
     transition: 'background-color 0.2s',
     ':hover': {
       backgroundColor: '#45a049'
     }
   },
-  searchInput: { 
+  searchInput: {
     padding: "12px",
     flex: 1,
     borderRadius: "8px 0 0 8px",
@@ -452,13 +452,13 @@ const styles = {
     outline: "none",
     fontSize: '16px'
   },
-  searchButton: { 
-    padding: "12px 24px", 
-    backgroundColor: "#2196F3", 
-    border: "none", 
-    borderRadius: "0 8px 8px 0", 
-    fontWeight: "bold", 
-    color: "white", 
+  searchButton: {
+    padding: "12px 24px",
+    backgroundColor: "#2196F3",
+    border: "none",
+    borderRadius: "0 8px 8px 0",
+    fontWeight: "bold",
+    color: "white",
     cursor: "pointer",
     transition: 'background-color 0.2s',
     ':hover': {
@@ -515,154 +515,154 @@ const styles = {
       backgroundColor: '#4CAF5020'
     }
   },
-  blocksContainer: { 
-    display: "flex", 
-    flexWrap: "wrap", 
-    justifyContent: "center", 
-    gap: "20px" 
+  blocksContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "20px"
   },
-  block: { 
-    backgroundColor: "#ffffff15", 
-    padding: "20px", 
-    borderRadius: "16px", 
-    boxShadow: "0 4px 12px rgba(0,0,0,0.3)", 
-    width: "300px", 
-    display: "flex", 
-    flexDirection: "column", 
-    backdropFilter: "blur(10px)" 
+  block: {
+    backgroundColor: "#ffffff15",
+    padding: "20px",
+    borderRadius: "16px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+    width: "300px",
+    display: "flex",
+    flexDirection: "column",
+    backdropFilter: "blur(10px)"
   },
-  blockHeader: { 
-    display: "flex", 
-    justifyContent: "space-between", 
-    alignItems: "center", 
-    marginBottom: "10px" 
+  blockHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "10px"
   },
-  blockTitle: { 
-    fontSize: "20px", 
-    fontWeight: "bold" 
+  blockTitle: {
+    fontSize: "20px",
+    fontWeight: "bold"
   },
-  blockTitleInput: { 
-    flex: 1, 
-    padding: "8px", 
-    fontSize: "16px", 
-    borderRadius: "8px", 
-    border: "1px solid #ccc", 
-    backgroundColor: "#ffffff20", 
-    color: "white", 
-    outline: "none" 
+  blockTitleInput: {
+    flex: 1,
+    padding: "8px",
+    fontSize: "16px",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    backgroundColor: "#ffffff20",
+    color: "white",
+    outline: "none"
   },
-  actions: { 
-    display: "flex", 
-    gap: "6px" 
+  actions: {
+    display: "flex",
+    gap: "6px"
   },
-  saveButton: { 
-    backgroundColor: "#28a745", 
-    border: "none", 
-    padding: "6px", 
-    borderRadius: "50%", 
-    cursor: "pointer", 
-    color: "white" 
+  saveButton: {
+    backgroundColor: "#28a745",
+    border: "none",
+    padding: "6px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    color: "white"
   },
-  cancelButton: { 
-    backgroundColor: "#dc3545", 
-    border: "none", 
-    padding: "6px", 
-    borderRadius: "50%", 
-    cursor: "pointer", 
-    color: "white" 
+  cancelButton: {
+    backgroundColor: "#dc3545",
+    border: "none",
+    padding: "6px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    color: "white"
   },
-  editButton: { 
-    backgroundColor: "#ffc107", 
-    border: "none", 
-    padding: "6px", 
-    borderRadius: "50%", 
-    cursor: "pointer", 
-    color: "white" 
+  editButton: {
+    backgroundColor: "#ffc107",
+    border: "none",
+    padding: "6px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    color: "white"
   },
-  deleteButton: { 
-    backgroundColor: "#e74c3c", 
-    border: "none", 
-    padding: "6px", 
-    borderRadius: "50%", 
-    cursor: "pointer", 
-    color: "white" 
+  deleteButton: {
+    backgroundColor: "#e74c3c",
+    border: "none",
+    padding: "6px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    color: "white"
   },
-  fetchButton: { 
-    marginTop: "10px", 
-    padding: "8px 16px", 
-    backgroundColor: "#17a2b8", 
-    border: "none", 
-    borderRadius: "10px", 
-    fontWeight: "bold", 
-    color: "white", 
+  fetchButton: {
+    marginTop: "10px",
+    padding: "8px 16px",
+    backgroundColor: "#17a2b8",
+    border: "none",
+    borderRadius: "10px",
+    fontWeight: "bold",
+    color: "white",
     cursor: "pointer",
     transition: 'background-color 0.2s',
     ':hover': {
       backgroundColor: '#138496'
     }
   },
-  fileInput: { 
-    marginBottom: "10px" 
+  fileInput: {
+    marginBottom: "10px"
   },
-  fileList: { 
-    flex: 1, 
-    marginTop: "10px" 
+  fileList: {
+    flex: 1,
+    marginTop: "10px"
   },
-  fileItem: { 
-    fontSize: "14px", 
-    padding: "8px 0", 
-    display: "flex", 
-    justifyContent: "space-between", 
-    alignItems: "center" 
+  fileItem: {
+    fontSize: "14px",
+    padding: "8px 0",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
-  noFiles: { 
-    textAlign: "center", 
-    color: "#aaa", 
-    marginTop: "10px" 
+  noFiles: {
+    textAlign: "center",
+    color: "#aaa",
+    marginTop: "10px"
   },
-  modalOverlay: { 
-    position: "fixed", 
-    top: "0", 
-    left: "0", 
-    right: "0", 
-    bottom: "0", 
-    backgroundColor: "rgba(0,0,0,0.6)", 
-    display: "flex", 
-    justifyContent: "center", 
-    alignItems: "center", 
-    zIndex: "1000" 
+  modalOverlay: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    backgroundColor: "rgba(0,0,0,0.6)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: "1000"
   },
-  modal: { 
-    backgroundColor: "#fff", 
-    padding: "30px", 
-    borderRadius: "16px", 
-    width: "90%", 
-    maxWidth: "400px", 
-    textAlign: "center", 
-    color: "#333" 
+  modal: {
+    backgroundColor: "#fff",
+    padding: "30px",
+    borderRadius: "16px",
+    width: "90%",
+    maxWidth: "400px",
+    textAlign: "center",
+    color: "#333"
   },
-  modalButtons: { 
-    marginTop: "20px", 
-    display: "flex", 
-    justifyContent: "space-around" 
+  modalButtons: {
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "space-around"
   },
-  confirmDeleteBtn: { 
-    backgroundColor: "#e74c3c", 
-    color: "white", 
-    padding: "10px 20px", 
-    border: "none", 
-    borderRadius: "8px", 
-    fontWeight: "bold", 
-    cursor: "pointer" 
+  confirmDeleteBtn: {
+    backgroundColor: "#e74c3c",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "8px",
+    fontWeight: "bold",
+    cursor: "pointer"
   },
-  cancelDeleteBtn: { 
-    backgroundColor: "#6c757d", 
-    color: "white", 
-    padding: "10px 20px", 
-    border: "none", 
-    borderRadius: "8px", 
-    fontWeight: "bold", 
-    cursor: "pointer" 
+  cancelDeleteBtn: {
+    backgroundColor: "#6c757d",
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "8px",
+    fontWeight: "bold",
+    cursor: "pointer"
   }
 };
 
