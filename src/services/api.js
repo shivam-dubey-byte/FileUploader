@@ -2,7 +2,7 @@
 
 export const addFolder = async (folderName) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/add-folder', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/add-folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const addFolder = async (folderName) => {
     formData.append('file', file);
 
     try {
-      const response = await fetch(`https://ff29-47-247-75-228.ngrok-free.app/upload-file-in-folder`, {
+      const response = await fetch(`https://f2df-47-247-75-228.ngrok-free.app/upload-file-in-folder`, {
         method: 'POST',
         body: formData,
       });
@@ -34,7 +34,7 @@ export const addFolder = async (folderName) => {
 
   export const fetchFilesInFolder = async (folderName) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/fetch-files-in-folder', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/fetch-files-in-folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const addFolder = async (folderName) => {
 
   export const fetchAllFiles = async () => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/fetch-all-files', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/fetch-all-files', {
         method: 'POST',
       });
       const data = await response.json();
@@ -62,7 +62,7 @@ export const addFolder = async (folderName) => {
 
   export const searchFiles = async (searchQuery) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/search-files', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/search-files', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const addFolder = async (folderName) => {
 
   export const editFolder = async (folderName, newFolderName) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/edit-folder', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/edit-folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export const addFolder = async (folderName) => {
 
   export const deleteFile = async (folderName, filename) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/delete-file', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/delete-file', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export const addFolder = async (folderName) => {
 
   export const deleteFolder = async (folderName) => {
     try {
-      const response = await fetch('https://ff29-47-247-75-228.ngrok-free.app/delete-folder', {
+      const response = await fetch('https://f2df-47-247-75-228.ngrok-free.app/delete-folder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

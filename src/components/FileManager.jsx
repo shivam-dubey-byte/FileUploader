@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 
-const BASE_URL = "https://ff29-47-247-75-228.ngrok-free.app";
+const BASE_URL = "https://f2df-47-247-75-228.ngrok-free.app";
 
 const FileManager = () => {
   const [blocks, setBlocks] = useState([]);
